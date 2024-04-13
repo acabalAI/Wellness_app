@@ -58,7 +58,7 @@ if user_input.lower() == 'exit':
 if st.button("Send"):
     index = pc.Index(index_name)
     index.describe_index_stats()
-    context = retrieve(user_input, limit=500, k=5)
+    context,tracking = retrieve(user_input, limit=500, k=5)
 
     # Memory retrieval
     relevant_memory = memory_agent.handle_memory(user_input, st.session_state.conversation_history)
@@ -66,7 +66,8 @@ if st.button("Send"):
     # Run dialogue
     response = dialogue_agent._run_dialogue(user_input, relevant_memory, context)
     st.session_state.conversation_history.append({"user": user_input, "bot": response})
-    st.write("Bot:", response)
+    st.write("Response:", response)
+    st.write("Tracking:", tracking)
 
 # Display the current conversation history
 st.write("Conversation History:")
